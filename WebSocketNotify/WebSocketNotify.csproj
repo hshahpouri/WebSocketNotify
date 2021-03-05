@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>(C) 2021 hShahpouri.Net</Copyright>
+    <Company>hShahpouri.Net</Company>
+    <Authors>@hShahpouri</Authors>
+    <Description>Accept and manage WebSocket requests asynchronous in ASP.Net Core</Description>
+    <PackageProjectUrl>https://github.com/hshahpouri/websocketnotify</PackageProjectUrl>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageTags>WebSocket</PackageTags>
+    <PackageIcon>WebSocketNotify.png</PackageIcon>
+    <PackageId>hShahpouri.WebSocketNotify</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebSockets" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="WebSocketNotify.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

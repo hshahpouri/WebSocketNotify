@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-right rounded p-1 m-3">
+    <button type="button" id="bConnect" onclick="socket_connect()" class="btn btn-primary" style="width:120px;">Connect</button>
+    <button type="button" id="bClose" onclick="socket_close()" class="btn btn-danger d-none" style="width:120px;">Close</button>
+</div>
+
+<div class="text-center rounded p-1 m-3">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label for="tbInput" class="input-group-text">To Server</label>
+            </div>
+            <input type="text" id="tbInput" class="form-control" />
+            <div class="input-group-append">
+                <button type="button" id="bSend" onclick="socket_send()" class="btn btn-info">Send</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<fieldset>
+    <legend class="text-monospace">From Server</legend>
+    <div class="border rounded text-secondary p-1 m-3" id="divResult"><ol></ol></div>
+</fieldset>
