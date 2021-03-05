@@ -1,37 +1,123 @@
-## Welcome to GitHub Pages
+## WebSocketNotify
 
-You can use the [editor on GitHub](https://github.com/hshahpouri/WebSocketNotify/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+WebSocketNotify is a dotnet-core package available on _github.com_ and _nuget.org_ to work with WebSocket standard in your website.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### How it works?
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+It is a very lightweight ClassLibrary built for dotnet core 3.1 and later that uses DI(dependency injection) to register `WSNotifyHandler`, Options Pattern and `IOptionMonitor` to carry out options for `WSNotifyHandler` and Extension Methods to append itself into dotnet core pipeline.
 
-```markdown
-Syntax highlighted code block
+### How to use it?
 
-# Header 1
-## Header 2
-### Header 3
+> Although there is a **sample of asp.net core project** available on [github.com] , here is a step-by-step
+> tutorial to show you how to use _WSNotify_ package into your own project.
 
-- Bulleted
-- List
+##### Server side
+To enable your website to accept WebSocket requests and receive message from clients or send/broadcast message
+to clients, you need to follow these steps:
 
-1. Numbered
-2. List
+1. You need to add **hShahpouri.WebSocketNotify** package to your project. It is available on github.com and nuget.org
+2. Create your desired options into _appsettings.json_ file like these default settings:
+   ```json
+   "WSNotify": {
+       "Route": "/ws",
+       "ConnectionPerIP": 1
+   }
+   ```
+3. Append this line into `ConfigureServices()` method in _Startup.cs_
+   ```c#
+   // using WebSocketNotify;
+   
+   public void ConfigureServices(IServiceCollection services)
+   {
+       ...
+       services.AddWebSocketNotify(Configuration);
+       ...
+   }
+   ```
+4. Prepend this line into `Configure()` method in _Startup.cs_
+   ```c#
+   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+   {
+       // this code should be placed at the most first line of method's body or
+       // immediately after your error handling middleware, for example:
+       // app.UseDeveloperExceptionPage();
+       app.UseWebSocketNotify();
+       ...
+   }
+   ```
+5. Now you need to get `WSNotifyHandler` service from **ServiceCollection** using DI and register a delegate for receiving messages from clients. The best place for doing it is in _Program.cs_ file, such as below:
+   ```c#
+   public class Program
+   {
+      public static void Main(string[] args)
+      {
+          var host = CreateHostBuilder(args).Build();
+          RegisterReceiver(host);
+          host.Run();
+      }
 
-**Bold** and _Italic_ and `Code` text
+      public static IHostBuilder CreateHostBuilder(string[] args) =>
+          Host.CreateDefaultBuilder(args)
+              .ConfigureWebHostDefaults(webBuilder =>
+              {
+                  webBuilder.UseStartup<Startup>();
+              });
+      
+      // Use this method to register a delegate to handle all received messages
+      private static void RegisterReceiver(IHost host)
+      {
+          var handler = host.Services.GetRequiredService<WSNotifyHandler>();
+          handler.OnReceive += (key, value, type) =>
+          {
+              Console.WriteLine();
+              Console.WriteLine("--------------------------------[BEGIN]");
+              Console.WriteLine($"({type}) from {key}");
+              Console.WriteLine(value);
+              Console.WriteLine("--------------------------------[END]");
+              Console.WriteLine();
+          };
+      }
+   }
+   ```
+6. Wherever you want to send a message to clients you just need to get `WSNotifyHandler` service using DI and then call `SendAsync()` method.
 
-[Link](url) and ![Image](src)
-```
+##### Client side
+To start communicating with server using WebSocket, you need to follow these steps:
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+1. In your webpage, inside a `<script>` tag (or a .js file) add this block:
+    ```javascript
+    /** @type{WebSocket} */
+    var ws = null;
+    
+    function socket_connect() {
 
-### Jekyll Themes
+        ws = new WebSocket("wss://localhost:5001/ws");
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/hshahpouri/WebSocketNotify/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+        ws.onopen = function (ev) {
+            console.log("onopen", ev);
+        };
 
-### Support or Contact
+        ws.onerror = function (ev) {
+            console.log("onerror", ev);
+        };
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+        ws.onclose = function (ev) {
+            console.log("onclose", ev);
+        };
+
+        ws.onmessage = function (ev) {
+            console.log("onmessage", ev.data);
+        };
+    }
+
+    function socket_close() {
+        ws.close();
+    }
+
+    function socket_send() {
+        ws.send("this is a message from client to server over WebSocket");
+    }
+    ```
+
+For more details see [Writing WebSocket client applications](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications).
