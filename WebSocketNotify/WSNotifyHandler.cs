@@ -61,6 +61,8 @@ namespace WebSocketNotify
                 removedItem.SocketTCS.TrySetResult(removedItem.Client);
             }
 
+            key = key.Replace("+", "-").Replace("/", "_").Replace("=", "");
+
             var data = new WSNotifyData(key, ip, webSocket, socketTCS);
             _wsClients[key] = data;
 
@@ -180,24 +182,26 @@ namespace WebSocketNotify
         {
             var buffer = new byte[4096];
 
-            using MemoryStream ms = new MemoryStream();
-
             WebSocketReceiveResult result = await data.Client.ReceiveAsync(buffer, data.ThreadCancellation.Token);
             while (!result.CloseStatus.HasValue)
             {
-                while (!result.EndOfMessage)
+                using (MemoryStream ms = new MemoryStream())
                 {
+                    while (!result.EndOfMessage)
+                    {
+                        await ms.WriteAsync(buffer, 0, result.Count, data.ThreadCancellation.Token);
+                        result = await data.Client.ReceiveAsync(buffer, data.ThreadCancellation.Token);
+                    }
                     await ms.WriteAsync(buffer, 0, result.Count, data.ThreadCancellation.Token);
-                    result = await data.Client.ReceiveAsync(buffer, data.ThreadCancellation.Token);
-                }
-                await ms.WriteAsync(buffer, 0, result.Count, data.ThreadCancellation.Token);
 
-                if (OnReceive != null)
-                {
-                    if (result.MessageType == WebSocketMessageType.Binary)
-                        OnReceive(data.Key, Convert.ToBase64String(ms.ToArray()), EnumWSNotifyMessageType.Binary);
-                    else
-                        OnReceive(data.Key, Encoding.UTF8.GetString(ms.ToArray()), EnumWSNotifyMessageType.Text);
+                    if (OnReceive != null)
+                    {
+                        if (result.MessageType == WebSocketMessageType.Binary)
+                            OnReceive(data.Key, Convert.ToBase64String(ms.ToArray()), EnumWSNotifyMessageType.Binary);
+                        else
+                            OnReceive(data.Key, Encoding.UTF8.GetString(ms.ToArray()), EnumWSNotifyMessageType.Text);
+
+                    }
                 }
 
                 result = await data.Client.ReceiveAsync(buffer, data.ThreadCancellation.Token);

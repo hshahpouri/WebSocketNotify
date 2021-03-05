@@ -28,10 +28,12 @@ namespace WebSocketSample
             var handler = host.Services.GetRequiredService<WSNotifyHandler>();
             handler.OnReceive += (key, value, type) =>
             {
-                Console.WriteLine("\n--------------------------------[BEGIN]");
+                Console.WriteLine();
+                Console.WriteLine("--------------------------------[BEGIN]");
                 Console.WriteLine($"({type}) from {key}");
                 Console.WriteLine(value);
-                Console.WriteLine("--------------------------------[END]\n");
+                Console.WriteLine("--------------------------------[END]");
+                Console.WriteLine();
             };
         }
     }

@@ -1,28 +1,63 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-right rounded p-1 m-3">
-    <button type="button" id="bConnect" onclick="socket_connect()" class="btn btn-primary" style="width:120px;">Connect</button>
-    <button type="button" id="bClose" onclick="socket_close()" class="btn btn-danger d-none" style="width:120px;">Close</button>
-</div>
-
-<div class="text-center rounded p-1 m-3">
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <label for="tbInput" class="input-group-text">To Server</label>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocketSample</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/WebSocketNotify.png" class="img-thumbnail mr-2" width="48" />
+                    <div class="align-middle d-inline-block text-left">
+                        <h1 class="m-0">WebSocketNotify</h1>
+                        <h2 class="m-0 mt-1 text-muted smallest font-weight-normal text-monospace">ASP.Net Core sample</h2>
+                    </div>
+                </a>
             </div>
-            <input type="text" id="tbInput" class="form-control" />
-            <div class="input-group-append">
-                <button type="button" id="bSend" onclick="socket_send()" class="btn btn-info">Send</button>
-            </div>
-        </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="row pb-3">
+            <div class="col-md-9 mx-auto">
+                <div class="alert alert-info border border-info">
+                    <p class="mb-2">Click on <ins>Connect</ins> button to connect to the server through WebSocket</p>
+                    <p class="mb-0"><small>Press <kbd>F12</kbd> to see WebSocket activity logs in console</small></p>
+                </div>
+                <div class="form-group text-right">
+                    <button type="button" id="bConnect" onclick="socket_connect()" class="btn btn-primary" style="width:120px;">Connect</button>
+                    <button type="button" id="bClose" onclick="socket_close()" class="btn btn-danger d-none" style="width:120px;">Close</button>
+                </div>
 
+                <fieldset class="form-group">
+                    <legend class="text-monospace">Send to Server</legend>
+                    <div class="input-group">
+                        <input type="text" id="tbInput" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="button" id="bSend" onclick="socket_send()" class="btn btn-success" disabled>Send</button>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <legend class="text-monospace">Receive from Server</legend>
+                    <div class="border border-warning rounded text-secondary p-1" id="divResult"><ol class="mb-0"></ol></div>
+                </fieldset>
+            </div>
+        </main>
     </div>
-</div>
 
-<fieldset>
-    <legend class="text-monospace">From Server</legend>
-    <div class="border rounded text-secondary p-1 m-3" id="divResult"><ol></ol></div>
-</fieldset>
+    <footer class="border-top footer text-muted">
+        <div class="container text-center">
+            <a href="https://hshahpouri.github.io/WebSocketNotify/">WebSocketNotify</a> is maintained by <a href="https://github.com/hshahpouri">hshahpouri</a>.
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
