@@ -22,7 +22,7 @@ namespace WebSocketNotify
         /// <item>Type (string/base64)</item>
         /// </list>
         /// </summary> 
-        public event Action<string, string, EnumWSNotifyMessageType> OnReceive;
+        public event Action<string, string, WSNotifyMessageType> OnReceive;
 
         private readonly Dictionary<string, WSNotifyData> _wsClients;
         private readonly IOptionsMonitor<WSNotifyOptions> _options;
@@ -123,7 +123,7 @@ namespace WebSocketNotify
 
             return 0;
         }
-        public async Task<int> SendAsync(string key, Stream data, EnumWSNotifyMessageType messageType = EnumWSNotifyMessageType.Text)
+        public async Task<int> SendAsync(string key, Stream data, WSNotifyMessageType messageType = WSNotifyMessageType.Text)
         {
             if (key is null)
             {
@@ -140,7 +140,7 @@ namespace WebSocketNotify
 
                         await item.Client.SendAsync(
                             new ArraySegment<byte>(buffer, 0, readBytes),
-                            messageType == EnumWSNotifyMessageType.Text ? WebSocketMessageType.Text : WebSocketMessageType.Binary,
+                            messageType == WSNotifyMessageType.Text ? WebSocketMessageType.Text : WebSocketMessageType.Binary,
                             endOfMessage,
                             CancellationToken.None);
 
@@ -165,7 +165,7 @@ namespace WebSocketNotify
 
                     await item.Client.SendAsync(
                         new ArraySegment<byte>(buffer, 0, readBytes),
-                        messageType == EnumWSNotifyMessageType.Text ? WebSocketMessageType.Text : WebSocketMessageType.Binary,
+                        messageType == WSNotifyMessageType.Text ? WebSocketMessageType.Text : WebSocketMessageType.Binary,
                         endOfMessage,
                         CancellationToken.None);
 
@@ -197,9 +197,9 @@ namespace WebSocketNotify
                     if (OnReceive != null)
                     {
                         if (result.MessageType == WebSocketMessageType.Binary)
-                            OnReceive(data.Key, Convert.ToBase64String(ms.ToArray()), EnumWSNotifyMessageType.Binary);
+                            OnReceive(data.Key, Convert.ToBase64String(ms.ToArray()), WSNotifyMessageType.Binary);
                         else
-                            OnReceive(data.Key, Encoding.UTF8.GetString(ms.ToArray()), EnumWSNotifyMessageType.Text);
+                            OnReceive(data.Key, Encoding.UTF8.GetString(ms.ToArray()), WSNotifyMessageType.Text);
 
                     }
                 }

@@ -1,7 +1,7 @@
 ﻿
 namespace WebSocketNotify
 {
-    public enum EnumWSNotifyMessageType
+    public enum WSNotifyMessageType
     {
         Binary,
         Text

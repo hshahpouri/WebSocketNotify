@@ -2,17 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Copyright>(C) 2021 hShahpouri.Net</Copyright>
+    <Copyright>WebSocketNotify is maintained by @hshahpouri</Copyright>
     <Company>hShahpouri.Net</Company>
     <Authors>@hShahpouri</Authors>
     <Description>Accept and manage WebSocket requests asynchronous in ASP.Net Core</Description>
-    <PackageProjectUrl>https://github.com/hshahpouri/websocketnotify</PackageProjectUrl>
+    <PackageProjectUrl>https://hshahpouri.github.io/WebSocketNotify/</PackageProjectUrl>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageTags>WebSocket</PackageTags>
     <PackageIcon>WebSocketNotify.png</PackageIcon>
     <PackageId>hShahpouri.WebSocketNotify</PackageId>
+    <PackageReleaseNotes>Accept and manage WebSocket requests asynchronous in ASP.Net Core</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/hshahpouri/WebSocketNotify</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
