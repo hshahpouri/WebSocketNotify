@@ -1,11 +1,14 @@
 theme: jekyll-theme-cayman
 show_downloads: true
-owner:
-  name: Hossein Shahpouri
-  bio: "Senior Software Developer"
+author: Hossein Shahpouri
+navbar-links:
+  Author's home: "https://hshahpouri.net"
+social-network-links:
   email: hshahpouri@outlook.com
   linkedin: hshahpouri
   github: hshahpouri
-  google:
-    plus: hshahpouri
-    analytics:
+  telegram: hshahpouri
+share-links-active:
+  telegram: true
+  github: true
+  linkedin: true
