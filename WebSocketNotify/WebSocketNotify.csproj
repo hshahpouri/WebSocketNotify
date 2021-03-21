@@ -16,6 +16,7 @@
     <PackageReleaseNotes>Accept and manage WebSocket requests asynchronous in ASP.Net Core</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/hshahpouri/WebSocketNotify</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿## WebSocketNotify
 
-WebSocketNotify is a dotnet-core package available on _github.com_ and _nuget.org_ to work with WebSocket standard in your website.
+WebSocketNotify is a dotnet-core package available on _[github.com](https://github.com/hshahpouri/WebSocketNotify)_ and _[nuget.org](https://www.nuget.org/packages/hShahpouri.WebSocketNotify/)_ to work with WebSocket standard in your website.
 
 
 ### How it works?
@@ -9,7 +9,7 @@ It is a very lightweight ClassLibrary built for dotnet core 3.1 and later that u
 
 ### How to use it?
 
-> Although there is a **sample of asp.net core project** available on [github.com] , here is a step-by-step
+> Although there is a **sample of asp.net core project** available on [github.com](https://github.com/hshahpouri/WebSocketNotify) , here is a step-by-step
 > tutorial to show you how to use _WSNotify_ package into your own project.
 
 ##### Server side
