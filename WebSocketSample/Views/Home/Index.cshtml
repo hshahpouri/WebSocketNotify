@@ -12,7 +12,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/WebSocketNotify.png" class="img-thumbnail mr-2" width="48" />
+                    <img src="~/WebSocketNotify.png" class="img-thumbnail mr-2" width="48" alt="WSNotify" />
                     <div class="align-middle d-inline-block text-left">
                         <h1 class="m-0">WebSocketNotify</h1>
                         <h2 class="m-0 mt-1 text-muted smallest font-weight-normal text-monospace">ASP.Net Core sample</h2>
@@ -24,8 +24,8 @@
     <div class="container">
         <main role="main" class="row pb-3">
             <div class="col-md-9 mx-auto">
-                <div class="alert alert-info border border-info">
-                    <p class="mb-2">Click on <ins>Connect</ins> button to connect to the server through WebSocket</p>
+                <div class="alert alert-info border border-info" id="divAlert">
+                    <p class="mb-2">Click on <ins>Connect</ins> button to connect to the server through WebSocket <span class="d-none badge" id="spanNotificationStatus"></span></p>
                     <p class="mb-0"><small>Press <kbd>F12</kbd> to see WebSocket activity logs in console</small></p>
                 </div>
                 <div class="form-group text-right">
@@ -34,7 +34,7 @@
                 </div>
 
                 <fieldset class="form-group">
-                    <legend class="text-monospace">Send to Server</legend>
+                    <legend class="text-monospace"><label for="tbInput">Send to Server</label></legend>
                     <div class="input-group">
                         <input type="text" id="tbInput" class="form-control" />
                         <div class="input-group-append">
